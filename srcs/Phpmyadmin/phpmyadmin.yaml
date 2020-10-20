@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phpmyadmin-deployment
+  labels:
+    app: phpmyadmin-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin-label
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin-label
+    spec:
+      containers:
+      - name: phpmyadmin-label
+        image: phpmyadmin:fpm-alpine
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PMA_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-username
+        - name: PMA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: mysql-root-pwd
+        - name: PMA_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: phpmyadmin-configmap
+              key: database_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phpmyadmin-service
+spec:
+  selector:
+    app: phpmyadmin-label
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    nodePort: 30000

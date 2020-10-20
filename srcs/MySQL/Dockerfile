@@ -1,1 +1,1 @@
-FROM alpine
+FROM woahbase/alpine-mysql:latest
