@@ -1,3 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx-label
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+    - name: https
+      protocol: TCP
+      port: 443
+    - name: ssh
+      port: 22
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,23 +40,3 @@ spec:
         - containerPort: 80
         - containerPort: 443
         - containerPort: 22
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-srvice
-spec:
-  selector:
-    app: nginx-label
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 80
-      nodePort: 30001
-    - name: https
-      protocol: TCP
-      port: 443
-      targetPort: 433
-      nodePort: 30002
-  type: LoadBalancer
