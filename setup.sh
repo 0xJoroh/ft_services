@@ -1,3 +1,8 @@
+brew install minikube docker
+export MINIKUBE_HOME=/goinfre/$(whoami)
+minikube start --vm-driver=virtualbox
+eval $(minikube -p minikube docker-env)
+
 docker build -t nginx-img      ./srcs/nginx/
 docker build -t mysql-img      ./srcs/mysql/
 docker build -t phpmyadmin-img ./srcs/phpmyadmin/
