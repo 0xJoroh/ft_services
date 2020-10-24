@@ -5,13 +5,14 @@ metadata:
   labels:
     app: phpmyadmin-label
 spec:
+  type: LoadBalancer
   selector:
     app: phpmyadmin-label
-  type: LoadBalancer
   ports:
   - protocol: TCP
     port: 5000
     targetPort: 5000
+    name: http
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,6 +37,7 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 5000
+          name: http
         env:
         - name: PMA_HOST
           valueFrom:
@@ -44,6 +46,8 @@ spec:
               key: database_url
         - name: PMA_PORT
           value: "3306"
+        - name: PMA_USER
+          value: user
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:

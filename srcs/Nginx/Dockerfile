@@ -10,7 +10,7 @@ RUN apk add openssh
 # for openssl command to create certs
 RUN apk add openssl
 # for service command
-RUN apk add openrc
+# RUN apk add openrc
 
 # move Nginx server configuration file
 COPY ./default.conf /etc/nginx/conf.d/
@@ -20,9 +20,12 @@ COPY ./run.sh /tmp/
 # make run.sh file executable
 RUN chmod +x /tmp/run.sh
 # to generate private keys, create CSRs, install your SSL/TLS certificate, and identify certificate information.
-RUN openssl req -newkey rsa:2048 -x509 -sha256 -days 365 -nodes -out /etc/ssl/certs/nginx-selfsigned.crt -keyout /etc/ssl/private/nginx-selfsigned.key -subj "/C=RU/ST=Moscow/L=Moscow/O=SCHOOL21/CN=www.ccaptain.com"
+RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=mydomain.com" -addext "subjectAltName=DNS:mydomain.com" -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt;
+
+RUN mkdir -p /run/nginx
 
 EXPOSE 80 443 22
 
 # run.sh will execute once container starts
-CMD ["sh", "/tmp/run.sh"]
+# CMD	["sh", "/tmp/run.sh"]
+CMD	["nginx", "-g", "daemon off;"]

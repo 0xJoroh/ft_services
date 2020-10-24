@@ -1,14 +1,8 @@
 #!/bin/sh
-mkdir -p /var/run/nginx
+/usr/bin/ssh-keygen -A
 
-ssh-keygen -A
 adduser --disabled-password admin
 echo "admin:admin" | chpasswd
 
-rc-service nginx start
-touch /run/openrc/softlevel
 /usr/sbin/sshd
-nginx -g "daemon off;"
-
-
-# rc-status, rc-service nginx start, rc-service nginx restart, apk add curl, curl 127.0.0.1
+/usr/sbin/nginx -g "daemon off;"
