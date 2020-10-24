@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress
+  name: wordpress-service
   labels:
-    app: wordpress
+    app: wordpress-label
 spec:
   ports:
     - port: 80
   selector:
-    app: wordpress
+    app: wordpress-label
     tier: frontend
   type: LoadBalancer
 ---
@@ -17,7 +17,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: wp-pv-claim
   labels:
-    app: wordpress
+    app: wordpress-label
 spec:
   accessModes:
     - ReadWriteOnce
@@ -25,39 +25,39 @@ spec:
     requests:
       storage: 20Gi
 ---
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress
+  name: wordpress-deployment
   labels:
-    app: wordpress
+    app: wordpress-label
 spec:
   selector:
     matchLabels:
-      app: wordpress
+      app: wordpress-label
       tier: frontend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: wordpress
+        app: wordpress-label
         tier: frontend
     spec:
       containers:
       - image: wordpress:4.8-apache
-        name: wordpress
+        name: wordpress-container
         env:
         - name: WORDPRESS_DB_HOST
-          value: wordpress-mysql
+          value: mysql-service
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: all-secrets
-              key: wordpress-db-password
+              name: mysql-pass
+              key: password
         ports:
         - containerPort: 80
-          name: wordpress
+          name: wordpress-label
         volumeMounts:
         - name: wordpress-persistent-storage
           mountPath: /var/www/html
