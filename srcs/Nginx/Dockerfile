@@ -12,15 +12,27 @@ RUN apk add openssl
 # for service command
 # RUN apk add openrc
 
+# to generate private keys, create CSRs, install your SSL/TLS certificate, and identify certificate information.
+RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=mydomain.com" -addext "subjectAltName=DNS:mydomain.com" -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt;
+
+# Add nginxx user
+# RUN adduser -D "user"
+# RUN echo "user:root" | chpasswd
+# RUN chown -R user /var/lib/nginx
+
+# # SSH user
+# RUN ssh-keygen -A
+# RUN adduser -D "userSSH"
+# RUN echo "userSSH:root" | chpasswd
+
 # move Nginx server configuration file
-COPY ./default.conf /etc/nginx/conf.d/
+COPY ./src/default.conf /etc/nginx/conf.d/
 # move run.sh scripte
-COPY ./run.sh /tmp/
+COPY ./src/run.sh /tmp/
+COPY ./src/index.html /var/www/localhost/htdocs
 
 # make run.sh file executable
 RUN chmod +x /tmp/run.sh
-# to generate private keys, create CSRs, install your SSL/TLS certificate, and identify certificate information.
-RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=mydomain.com" -addext "subjectAltName=DNS:mydomain.com" -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt;
 
 RUN mkdir -p /run/nginx
 

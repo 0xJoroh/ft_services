@@ -24,6 +24,8 @@ metadata:
     app: nginx-label
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: nginx-label
@@ -33,8 +35,8 @@ spec:
         app: nginx-label
     spec:
       containers:
-      - name: nginx-container
-        image: nginx-img
+      - image: nginx-img
+        name: nginx-container
         imagePullPolicy: Never
         ports:
         - containerPort: 80
