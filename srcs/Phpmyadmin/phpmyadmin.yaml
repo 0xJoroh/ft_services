@@ -5,13 +5,14 @@ metadata:
   labels:
     app: phpmyadmin-label
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: phpmyadmin-label
   ports:
-  - port: 5000
-    protocol: TCP
-    name: http
+    - port: 80
+      name: http
+      protocol: TCP
+      targetPort: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -32,11 +33,11 @@ spec:
         app: phpmyadmin-label
     spec:
       containers:
-      - image: phpmyadmin:fpm-alpine
+      - image: phpmyadmin/phpmyadmin
         name: phpmyadmin-container
         # imagePullPolicy: Never
         ports:
-        - containerPort: 5000
+        - containerPort: 80
         env:
         - name: PMA_HOST
           value: mysql-service
