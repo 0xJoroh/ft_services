@@ -40,7 +40,7 @@ spec:
       tier: mysql
   strategy:
     type: Recreate
-    # strategy: type: Recreate in the Deployment configuration YAML file.
+    # Recreate in the Deployment configuration YAML file.
     # This instructs Kubernetes to not use rolling updates.
     # Rolling updates will not work, as you cannot have more than one Pod running at a time.
     # The Recreate strategy will stop the first pod before creating a new one with the updated configuration.
@@ -66,6 +66,7 @@ spec:
         persistentVolumeClaim:
           claimName: mysql-pv-claim
         # PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource.
-        # So a persistent volume (PV) is the "physical" volume on the host machine that stores your persistent data. A persistent volume claim (PVC) is a request for the platform to create a PV for you, and you attach PVs to your pods via a PVC.
+        # So a persistent volume (PV) is the "physical" volume on the host machine that stores your persistent data.
+        # A persistent volume claim (PVC) is a request for the platform to create a PV for you, and you attach PVs to your pods via a PVC.
         # Something akin to
         # Pod -> PVC -> PV -> Host machine
