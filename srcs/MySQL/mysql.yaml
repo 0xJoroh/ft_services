@@ -7,6 +7,8 @@ metadata:
 spec:
   ports:
     - port: 3306
+      name: mysql
+      targetPort: 3306
   selector:
     app: mysql-label
     tier: mysql
@@ -56,7 +58,6 @@ spec:
           value: root
         ports:
         - containerPort: 3306
-          name: mysql
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
@@ -68,4 +69,3 @@ spec:
         # So a persistent volume (PV) is the "physical" volume on the host machine that stores your persistent data. A persistent volume claim (PVC) is a request for the platform to create a PV for you, and you attach PVs to your pods via a PVC.
         # Something akin to
         # Pod -> PVC -> PV -> Host machine
-

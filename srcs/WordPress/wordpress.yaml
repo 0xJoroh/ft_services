@@ -5,12 +5,15 @@ metadata:
   labels:
     app: wordpress-label
 spec:
+  type: LoadBalancer
   ports:
     - port: 80
+      name: http
+      protocol: TCP
+      targetPort: 80
   selector:
     app: wordpress-label
     tier: frontend
-  type: LoadBalancer
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -58,7 +61,6 @@ spec:
           value: root
         ports:
         - containerPort: 80
-          name: wordpress-label
         volumeMounts:
         - name: wordpress-persistent-storage
           mountPath: /var/www/html
