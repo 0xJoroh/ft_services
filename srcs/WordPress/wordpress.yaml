@@ -5,13 +5,25 @@ metadata:
   labels:
     app: wordpress-label
 spec:
-  type: LoadBalancer
+  ports:
+    - port: 80
   selector:
     app: wordpress-label
-  ports:
-    - port: 5050
-      name: http
-      targetPort: 5050
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pv-claim
+  labels:
+    app: wordpress-label
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,38 +35,34 @@ spec:
   selector:
     matchLabels:
       app: wordpress-label
-  replicas: 1
+      tier: frontend
+  strategy:
+    type: Recreate
+    # strategy: type: Recreate in the Deployment configuration YAML file.
+    # This instructs Kubernetes to not use rolling updates.
+    # Rolling updates will not work, as you cannot have more than one Pod running at a time.
+    # The Recreate strategy will stop the first pod before creating a new one with the updated configuration.
   template:
     metadata:
-      name: wordpress-pod
       labels:
         app: wordpress-label
+        tier: frontend
     spec:
       containers:
-        - name: wordpress-container
-          image: wordpress-img
-          imagePullPolicy: Never
-          ports:
-            - containerPort: 5050
-              name: http
-          env:
-            - name: DB_NAME
-              valueFrom:
-                    secretKeyRef:
-                      name: wordpress-secret
-                      key: db_name
-            - name: DB_USER
-              valueFrom:
-                    secretKeyRef:
-                      name: wordpress-secret
-                      key: db_user
-            - name: DB_HOST
-              valueFrom:
-                    secretKeyRef:
-                      name: wordpress-secret
-                      key: db_host
-            - name: DB_PASSWORD
-              valueFrom:
-                    secretKeyRef:
-                      name: wordpress-secret
-                      key: db_password
+      - image: wordpress:4.8-apache
+        name: wordpress-container
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql-service
+        - name: WORDPRESS_DB_PASSWORD
+          value: root
+        ports:
+        - containerPort: 80
+          name: wordpress-label
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: /var/www/html
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: wp-pv-claim
