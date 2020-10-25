@@ -38,6 +38,7 @@ spec:
     matchLabels:
       app: mysql-label
       tier: mysql
+  replicas: 1
   strategy:
     type: Recreate
     # Recreate in the Deployment configuration YAML file.

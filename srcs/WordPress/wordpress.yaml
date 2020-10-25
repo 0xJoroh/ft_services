@@ -39,6 +39,7 @@ spec:
     matchLabels:
       app: wordpress-label
       tier: frontend
+  replicas: 1
   strategy:
     type: Recreate
     # strategy: type: Recreate in the Deployment configuration YAML file.
