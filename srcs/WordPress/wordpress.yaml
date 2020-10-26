@@ -7,10 +7,10 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 80
+    - port: 5050
       name: http
       protocol: TCP
-      targetPort: 80
+      targetPort: 5050
   selector:
     app: wordpress-label
     tier: frontend
@@ -53,15 +53,16 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: wordpress:4.8-apache
+      - image: wordpress-img
         name: wordpress-container
+        imagePullPolicy: Never
         env:
         - name: WORDPRESS_DB_HOST
           value: mysql-service
         - name: WORDPRESS_DB_PASSWORD
           value: root
         ports:
-        - containerPort: 80
+        - containerPort: 5050
         volumeMounts:
         - name: wordpress-persistent-storage
           mountPath: /var/www/html

@@ -5,6 +5,8 @@ metadata:
   labels:
     app: mysql-label
 spec:
+  type: ClusterIP
+  # clusterIP: None
   ports:
     - port: 3306
       name: mysql
@@ -12,7 +14,6 @@ spec:
   selector:
     app: mysql-label
     tier: mysql
-  clusterIP: None
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

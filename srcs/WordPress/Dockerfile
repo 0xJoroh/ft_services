@@ -1,16 +1,31 @@
+# FROM alpine:latest
+
+# RUN apk update && apk upgrade
+# RUN apk add wget php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session mysql-client
+
+# RUN apk add nginx openrc
+# # Make sure the nginx and php-fpm7 starts when system reboots: add nginx & php to Runlevel default
+# RUN rc-update add nginx default
+# RUN rc-update add php-fpm7 default
+# COPY ./src/default.conf /etc/nginx/conf.d/
+
+# RUN wget https://wordpress.org/latest.tar.gz && tar -zxvf latest.tar.gz && rm -rf latest.tar.gz && mv wordpress /var/www/localhost/htdocs/wordpress
+
+# COPY ./src/wp-config.php /var/www/localhost/htdocs/wordpress/wp-config.php
+
+# EXPOSE 5050
+# CMD ["php","-S", "0.0.0.0:5050", "-t", "/var/www/localhost/htdocs/wordpress"]
+
 FROM alpine:latest
 
-RUN apk update && apk upgrade
-RUN apk add --no-cache php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session
+RUN apk update
+RUN apk add wget php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session mysql-client
 
-RUN wget http://wordpress.org/latest.tar.gz
-RUN tar -zxvf latest.tar.gz
-RUN rm -rf latest.tar.gz
-RUN mv wordpress /var/www/wordpress
-RUN chown -R www-data:www-data /var/www/wordpress
-RUN chmod 755 -R /var/www/wordpress
+RUN wget https://wordpress.org/latest.tar.gz && tar -xvf latest.tar.gz && rm -f latest.tar.gz && mv wordpress /etc/
 
-COPY ./wp-config.php /var/www/wordpress/wp-config.php
+COPY ./src/wp-config.php /etc/wordpress/
+# COPY ./src/wordpress.sql /tmp/
+COPY ./src/run.sh /tmp/
 
 EXPOSE 5050
-CMD ["php","-S", "0.0.0.0:5050", "-t", "/wordpress"]
+CMD ["sh", "/tmp/run.sh"]
