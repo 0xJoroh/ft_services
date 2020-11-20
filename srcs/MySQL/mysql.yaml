@@ -6,7 +6,7 @@ metadata:
     app: mysql-label
 spec:
   type: ClusterIP
-  # clusterIP: None
+  clusterIP: None
   ports:
     - port: 3306
       name: mysql
@@ -53,22 +53,22 @@ spec:
         tier: mysql
     spec:
       containers:
-      - image: mysql:5.6
-        name: mysql
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: root
-        ports:
-        - containerPort: 3306
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
+        - image: mysql:5.6
+          name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
       volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
-        # PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource.
-        # So a persistent volume (PV) is the "physical" volume on the host machine that stores your persistent data.
-        # A persistent volume claim (PVC) is a request for the platform to create a PV for you, and you attach PVs to your pods via a PVC.
-        # Something akin to
-        # Pod -> PVC -> PV -> Host machine
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+          # PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource.
+          # So a persistent volume (PV) is the "physical" volume on the host machine that stores your persistent data.
+          # A persistent volume claim (PVC) is a request for the platform to create a PV for you, and you attach PVs to your pods via a PVC.
+          # Something akin to
+          # Pod -> PVC -> PV -> Host machine

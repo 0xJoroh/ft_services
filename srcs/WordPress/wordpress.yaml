@@ -53,20 +53,20 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: wordpress-img
-        name: wordpress-container
-        imagePullPolicy: Never
-        env:
-        - name: WORDPRESS_DB_HOST
-          value: mysql-service
-        - name: WORDPRESS_DB_PASSWORD
-          value: root
-        ports:
-        - containerPort: 5050
-        volumeMounts:
-        - name: wordpress-persistent-storage
-          mountPath: /var/www/html
+        - image: wordpress-img
+          name: wordpress-container
+          imagePullPolicy: Never
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: mysql-service
+            - name: WORDPRESS_DB_PASSWORD
+              value: root
+          ports:
+            - containerPort: 5050
+          volumeMounts:
+            - name: wordpress-persistent-storage
+              mountPath: /var/www/html
       volumes:
-      - name: wordpress-persistent-storage
-        persistentVolumeClaim:
-          claimName: wp-pv-claim
+        - name: wordpress-persistent-storage
+          persistentVolumeClaim:
+            claimName: wp-pv-claim
