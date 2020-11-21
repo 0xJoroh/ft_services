@@ -1,2 +1,4 @@
-mysql --host=mysql-service --user=root --password=root wordpress < /tmp/wordpress.sql
-php -S 0.0.0.0:5050 -t /etc/wordpress/
+# mysql --host=mysql-service --user=root --password=root wordpress < /tmp/wordpress.sql
+echo "CREATE DATABASE wordpress;" | mysql -u root --password=root
+php-fpm7
+nginx -g "daemon off;"

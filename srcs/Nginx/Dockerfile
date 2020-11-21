@@ -28,11 +28,11 @@ RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=myd
 # move Nginx server configuration file
 COPY ./src/default.conf /etc/nginx/conf.d/
 # move run.sh scripte
-COPY ./src/run.sh /tmp/
-COPY ./src/index.html /var/www/localhost/htdocs
+# COPY ./src/run.sh /tmp/
+# COPY ./src/index.html /var/www/localhost/htdocs
 
 # make run.sh file executable
-RUN chmod +x /tmp/run.sh
+# RUN chmod +x /tmp/run.sh
 
 RUN mkdir -p /run/nginx
 
