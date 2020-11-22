@@ -9,10 +9,10 @@ spec:
   selector:
     app: phpmyadmin-label
   ports:
-    - port: 80
+    - port: 5000
       name: http
       protocol: TCP
-      targetPort: 80
+      targetPort: 5000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,15 +33,8 @@ spec:
         app: phpmyadmin-label
     spec:
       containers:
-      - image: phpmyadmin/phpmyadmin
-        name: phpmyadmin-container
-        # imagePullPolicy: Never
-        ports:
-        - containerPort: 80
-        env:
-        - name: PMA_HOST
-          value: mysql-service
-        - name: PMA_PORT
-          value: "3306"
-        - name: MYSQL_ROOT_PASSWORD
-          value: root
+        - image: phpmyadmin-img
+          name: phpmyadmin-container
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000

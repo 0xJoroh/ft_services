@@ -6,7 +6,7 @@ metadata:
     app: mysql-label
 spec:
   type: ClusterIP
-  clusterIP: None
+  clusterIP: 10.99.99.99
   ports:
     - port: 3306
       name: mysql

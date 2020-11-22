@@ -13,7 +13,7 @@
  * This is needed for cookie based authentication to encrypt password in
  * cookie. Needs to be 32 chars long.
  */
-$cfg['blowfish_secret'] = ''; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
+$cfg['blowfish_secret'] = 'KLS$vbc91Lkja$vc@opGbxA278EWopdc'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
 
 /**
  * Servers configuration
@@ -30,10 +30,10 @@ $cfg['Servers'][1]['AllowNoPassword'] = false;
  */
 
 /* User used to manipulate with storage */
-$cfg['Servers'][1]['host'] = getenv('PMA_HOST');
-$cfg['Servers'][1]['port'] = getenv('PMA_PORT');
-$cfg['Servers'][1]['user'] = getenv('PMA_USER');
-$cfg['Servers'][1]['password'] = getenv('MYSQL_ROOT_PASSWORD');
+$cfg['Servers'][1]['host'] = '10.99.99.99';
+$cfg['Servers'][1]['port'] = '3306';
+$cfg['Servers'][1]['user'] = 'root';
+$cfg['Servers'][1]['password'] = 'root';
 
 /**
  * End of servers configuration
@@ -44,3 +44,5 @@ $cfg['Servers'][1]['password'] = getenv('MYSQL_ROOT_PASSWORD');
  */
 $cfg['UploadDir'] = '';
 $cfg['SaveDir'] = '';
+
+$cfg['TempDir'] = '/tmp';
