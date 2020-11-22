@@ -53,11 +53,11 @@ spec:
         tier: mysql
     spec:
       containers:
-        - image: mysql:5.6
+        - image: mysql-img
           name: mysql
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: root
+          imagePullPolicy: Never
+          securityContext:
+            privileged: true
           ports:
             - containerPort: 3306
           volumeMounts:
