@@ -1,57 +1,61 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-service
-  labels:
-    app: mysql-label
+  name: mysql
 spec:
   type: ClusterIP
   clusterIP: 10.99.99.99
-  ports:
-    - port: 3306
-      name: mysql
-      targetPort: 3306
   selector:
-    app: mysql-label
-    tier: mysql
+    app: mysql
+  ports:
+      - port: 3306
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
-  labels:
-    app: mysql-label
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
+      storage: 500Mi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv-volume
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data"
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-deployment
+  name: mysql
   labels:
-    app: mysql-label
+    app: mysql
 spec:
   selector:
     matchLabels:
-      app: mysql-label
+      app: mysql
       tier: mysql
   replicas: 1
   strategy:
     type: Recreate
-    # Recreate in the Deployment configuration YAML file.
-    # This instructs Kubernetes to not use rolling updates.
-    # Rolling updates will not work, as you cannot have more than one Pod running at a time.
-    # The Recreate strategy will stop the first pod before creating a new one with the updated configuration.
   template:
     metadata:
       labels:
-        app: mysql-label
+        app: mysql
         tier: mysql
     spec:
+      restartPolicy: Always
       containers:
         - image: mysql-img
           name: mysql
@@ -62,13 +66,8 @@ spec:
             - containerPort: 3306
           volumeMounts:
             - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
+              mountPath: "/var/lib/mysql"
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: mysql-pv-claim
-          # PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource.
-          # So a persistent volume (PV) is the "physical" volume on the host machine that stores your persistent data.
-          # A persistent volume claim (PVC) is a request for the platform to create a PV for you, and you attach PVs to your pods via a PVC.
-          # Something akin to
-          # Pod -> PVC -> PV -> Host machine

@@ -30,6 +30,7 @@ COPY ./src/default.conf /etc/nginx/conf.d/
 # move run.sh scripte
 # COPY ./src/run.sh /tmp/
 # COPY ./src/index.html /var/www/localhost/htdocs
+RUN echo "<h1>Welcome to nginx!!!</h1>" > /var/www/localhost/htdocs/index.html
 
 # make run.sh file executable
 # RUN chmod +x /tmp/run.sh
