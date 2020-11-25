@@ -10,5 +10,6 @@ mysql -u root -e "CREATE USER 'admin'@'%' IDENTIFIED BY 'admin';"
 mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%';"
 mysql -u root -e "FLUSH PRIVILEGES;"
 mysql wordpress -u root < wordpress.sql
+
 rc-service mariadb restart
 tail -F /dev/null
