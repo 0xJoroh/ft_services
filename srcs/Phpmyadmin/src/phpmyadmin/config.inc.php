@@ -32,8 +32,8 @@ $cfg['Servers'][1]['AllowNoPassword'] = false;
 /* User used to manipulate with storage */
 $cfg['Servers'][1]['host'] = '10.99.99.99';
 $cfg['Servers'][1]['port'] = '3306';
-$cfg['Servers'][1]['user'] = 'root';
-$cfg['Servers'][1]['password'] = 'root';
+$cfg['Servers'][1]['user'] = 'admin';
+$cfg['Servers'][1]['password'] = 'admin';
 
 /**
  * End of servers configuration
