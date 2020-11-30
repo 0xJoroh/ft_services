@@ -6,13 +6,13 @@ metadata:
   name: wordpress-service
 spec:
   type: LoadBalancer
+  selector:
+    app: wordpress
   ports:
     - port: 5050
       name: http
       protocol: TCP
       targetPort: 5050
-  selector:
-    app: wordpress
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -21,12 +21,12 @@ metadata:
   labels:
     app: wordpress
 spec:
-  selector:
-    matchLabels:
-      app: wordpress
   replicas: 1
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: wordpress
   template:
     metadata:
       labels:
