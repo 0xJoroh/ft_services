@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.11
 
 RUN apk update && apk upgrade
 RUN apk add mysql mysql-client openrc
