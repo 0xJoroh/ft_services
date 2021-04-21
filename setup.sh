@@ -25,4 +25,3 @@ kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 kubectl apply -f ./srcs/wordpress/wordpress.yaml
 kubectl apply -f ./srcs/FTPS/ftps.yaml
 kubectl apply -f ./srcs/metallb_conf.yaml
-
