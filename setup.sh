@@ -34,6 +34,6 @@ minikube dashboard &
 
 
 
-kubectl delete -f ./srcs/InfluxDB/InfluxDB.yaml ; docker rmi influxdb-img ; docker build -t influxdb-img      ./srcs/InfluxDB/ ; kubectl apply -f ./srcs/InfluxDB/InfluxDB.yaml
-kubectl delete -f ./srcs/grafana/grafana.yaml ; docker rmi grafana-img ; docker build -t grafana-img      ./srcs/grafana/ ; kubectl apply -f ./srcs/grafana/grafana.yaml
-kubectl delete -f ./srcs/mysql/mysql.yaml ; docker rmi mysql-img ; docker build -t mysql-img      ./srcs/mysql/ ; kubectl apply -f ./srcs/mysql/mysql.yaml
+# kubectl delete -f ./srcs/InfluxDB/InfluxDB.yaml ; docker rmi influxdb-img ; docker build -t influxdb-img      ./srcs/InfluxDB/ ; kubectl apply -f ./srcs/InfluxDB/InfluxDB.yaml
+# kubectl delete -f ./srcs/grafana/grafana.yaml ; docker rmi grafana-img ; docker build -t grafana-img      ./srcs/grafana/ ; kubectl apply -f ./srcs/grafana/grafana.yaml
+# kubectl delete -f ./srcs/mysql/mysql.yaml ; docker rmi mysql-img ; docker build -t mysql-img      ./srcs/mysql/ ; kubectl apply -f ./srcs/mysql/mysql.yaml
