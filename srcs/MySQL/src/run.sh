@@ -3,6 +3,7 @@ mkdir /run/openrc/
 touch /run/openrc/softlevel
 rc-status
 rc-service mariadb start
+rc-service telegraf start
 
 mysqladmin -u root password 'admin'
 mysql -u root -e "CREATE DATABASE wordpress;"
@@ -12,5 +13,4 @@ mysql -u root -e "FLUSH PRIVILEGES;"
 mysql wordpress -u root < wordpress.sql
 
 rc-service mariadb restart
-./telegraf-1.17.0/usr/bin/telegraf --config /telegraf-1.17.0/usr/bin/telegraf.conf &
 tail -F /dev/null

@@ -1,7 +1,7 @@
 #!/bin/sh
-
 openrc
+rc-status
 touch /run/openrc/softlevel
-
-sshd
+rc-service telegraf start
+rc-service sshd start
 nginx -g "daemon off;"

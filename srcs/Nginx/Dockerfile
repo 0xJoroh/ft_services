@@ -25,12 +25,16 @@ RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=myd
 # RUN adduser -D "userSSH"
 # RUN echo "userSSH:root" | chpasswd
 
-# move Nginx server configuration file
+# Nginx server configuration file
 COPY ./src/default.conf /etc/nginx/conf.d/
-# move run.sh scripte
-# COPY ./src/run.sh /tmp/
+
+COPY ./src/run.sh /tmp/
 # COPY ./src/index.html /var/www/localhost/htdocs
 RUN echo "<h1>Welcome to nginx!!!</h1>" > /var/www/localhost/htdocs/index.html
+
+# ADD telegraf
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/
+COPY ./src/telegraf.conf /etc
 
 # make run.sh file executable
 # RUN chmod +x /tmp/run.sh
@@ -40,5 +44,5 @@ RUN mkdir -p /run/nginx
 EXPOSE 80 443 22
 
 # run.sh will execute once container starts
-# CMD	["sh", "/tmp/run.sh"]
-CMD	["nginx", "-g", "daemon off;"]
+CMD	["sh", "/tmp/run.sh"]
+# CMD	["nginx", "-g", "daemon off;"]

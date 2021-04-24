@@ -11,9 +11,9 @@ RUN chown -R admin:root /etc/vsftpd
 RUN yes "" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/certs/vsftpd.crt
 COPY ./src/vsftpd.conf /etc/vsftpd/vsftpd.conf
 
-# RUN wget https://dl.influxdata.com/telegraf/releases/telegraf-1.17.0_linux_amd64.tar.gz
-# RUN tar -zxvf telegraf-1.17.0_linux_amd64.tar.gz
-# COPY ./src/telegraf.conf telegraf-1.17.0/usr/bin/
+# ADD telegraf
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/
+COPY ./src/telegraf.conf /etc
 
 COPY ./src/start.sh /
 # COPY ./src/liveness.sh /
