@@ -12,7 +12,7 @@ COPY ./src/telegraf.conf /etc
 COPY ./src/start.sh /
 # COPY ./src/liveness.sh /
 
-# COPY ./src/grafana.db /grafana-7.4.0/data/grafana.db
+COPY ./src/grafana.db /grafana-7.4.0/data/grafana.db
 
 EXPOSE 3000
 
