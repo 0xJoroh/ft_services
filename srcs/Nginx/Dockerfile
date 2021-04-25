@@ -29,15 +29,13 @@ RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=myd
 COPY ./src/default.conf /etc/nginx/conf.d/
 
 COPY ./src/run.sh /tmp/
-# COPY ./src/index.html /var/www/localhost/htdocs
+RUN chmod +x /tmp/run.sh
+
 RUN echo "<h1>Welcome to nginx!!!</h1>" > /var/www/localhost/htdocs/index.html
 
 # ADD telegraf
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/
 COPY ./src/telegraf.conf /etc
-
-# make run.sh file executable
-# RUN chmod +x /tmp/run.sh
 
 RUN mkdir -p /run/nginx
 
@@ -45,4 +43,3 @@ EXPOSE 80 443 22
 
 # run.sh will execute once container starts
 CMD	["sh", "/tmp/run.sh"]
-# CMD	["nginx", "-g", "daemon off;"]
