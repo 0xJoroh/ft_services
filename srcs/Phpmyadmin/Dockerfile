@@ -9,7 +9,7 @@ RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/comm
 COPY ./src/telegraf.conf /etc
 
 COPY ./src/default.conf /etc/nginx/conf.d/
-COPY ./src/phpmyadmin /var/www/localhost/htdocs/
+COPY ./src/phpmyadmin /var/www/localhost/htdocs/phpmyadmin
 COPY ./src/run.sh /tmp/
 
 EXPOSE 5000
