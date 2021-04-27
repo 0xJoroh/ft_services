@@ -3,7 +3,8 @@ kubectl delete deployments --all
 kubectl delete svc --all
 kubectl delete pvc --all
 
-minikube start --driver=virtualbox
+# minikube start --driver=virtualbox
+minikube start --vm-driver=hyperkit
 
 eval $(minikube -p minikube docker-env)
 docker build -t nginx-img        ./srcs/Nginx/

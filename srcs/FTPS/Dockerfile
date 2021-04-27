@@ -16,11 +16,11 @@ RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/comm
 COPY ./src/telegraf.conf /etc
 
 COPY ./src/start.sh /
-# COPY ./src/liveness.sh /
+COPY ./src/liveness.sh /
 
 RUN chmod 777 /start.sh
 
-#Open port 20 for ftp data to and from, port 21 for ftp commands,
+#Open port 20 for ftp data to and from, port 21 for ftp commands
 #and ports 20000 to 20001 to be used in passive mode
 EXPOSE 20 21 20000 20001
 

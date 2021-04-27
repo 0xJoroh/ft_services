@@ -10,7 +10,7 @@ RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/comm
 COPY ./src/telegraf.conf /etc
 
 COPY ./src/start.sh /
-# COPY ./src/liveness.sh /
+COPY ./src/liveness.sh /
 
 COPY ./src/grafana.db /grafana-7.4.0/data/grafana.db
 

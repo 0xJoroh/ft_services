@@ -46,10 +46,10 @@ spec:
         - containerPort: 21
         - containerPort: 20000
         - containerPort: 20001
-        # livenessProbe:
-        #   exec:
-        #     command:
-        #       - sh
-        #       - liveness.sh
-        #   initialDelaySeconds: 30
-        #   periodSeconds: 5
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - liveness.sh
+          initialDelaySeconds: 30
+          periodSeconds: 5

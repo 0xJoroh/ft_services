@@ -10,7 +10,7 @@ COPY ./src/telegraf.conf /etc
 
 RUN mkdir /run/openrc
 COPY ./src/start.sh /
-# COPY ./src/liveness.sh /
+COPY ./src/liveness.sh /
 
 RUN chmod +x start.sh
 

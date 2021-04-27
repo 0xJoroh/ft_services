@@ -11,6 +11,7 @@ COPY ./src/telegraf.conf /etc
 COPY ./src/default.conf /etc/nginx/conf.d/
 COPY ./src/wordpress /var/www/localhost/htdocs/
 COPY ./src/run.sh /tmp/
+COPY ./src/liveness.sh /
 
 EXPOSE 5050
 CMD ["sh", "/tmp/run.sh"]

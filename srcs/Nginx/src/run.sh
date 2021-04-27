@@ -5,4 +5,7 @@ touch /run/openrc/softlevel
 rc-service telegraf start
 rc-service sshd start
 nginx
-sh
+
+while [ 1 -eq 1 ]; do
+	echo llll
+done

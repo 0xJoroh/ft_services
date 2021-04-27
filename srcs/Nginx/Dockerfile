@@ -35,6 +35,7 @@ RUN ssh-keygen -A
 COPY ./src/default.conf /etc/nginx/conf.d/
 
 COPY ./src/run.sh /tmp/
+COPY ./src/liveness.sh /
 
 RUN chmod +x /tmp/run.sh
 RUN echo "<h1>Welcome to nginx!!!</h1>" > /var/www/localhost/htdocs/index.html
