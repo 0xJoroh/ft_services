@@ -21,7 +21,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: nginx
   labels:
     app: nginx-label
 spec:
@@ -49,5 +49,5 @@ spec:
             command:
               - sh
               - liveness.sh
-          initialDelaySeconds: 30
+          initialDelaySeconds: 40
           periodSeconds: 5

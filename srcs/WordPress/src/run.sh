@@ -1,7 +1,7 @@
-adduser -D -g 'www' www
-mkdir /www
-chown -R www:www /var/lib/nginx
-chown -R www:www /www
+# adduser -D -g 'www' www
+# mkdir /www
+# chown -R www:www /var/lib/nginx
+# chown -R www:www /www
 mkdir /run/openrc/
 touch /run/openrc/softlevel
 rc-status

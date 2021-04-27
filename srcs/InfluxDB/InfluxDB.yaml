@@ -54,11 +54,11 @@ spec:
             command:
               - sh
               - liveness.sh
-          initialDelaySeconds: 30
+          initialDelaySeconds: 40
           periodSeconds: 5
         volumeMounts:
         - name: influxdb-persistent-storage
-          mountPath: /var/lib/influxdb
+          mountPath: /root/.influxdb/
       volumes:
       - name: influxdb-persistent-storage
         persistentVolumeClaim:
